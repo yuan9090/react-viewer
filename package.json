@@ -90,6 +90,9 @@
   "dependencies": {
     "classnames": "^2.2.5"
   },
+  "optionalDependencies": {
+    "fsevents": "2.3.3"
+  },
   "pre-commit": [
     "lint"
   ],
