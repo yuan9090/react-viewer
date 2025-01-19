@@ -1,7 +1,6 @@
 const path = require('path');
 const Config = require('webpack-chain');
 const autoprefixer = require('autoprefixer');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const DEFAULT_BROWSERS = [
   '>1%',
@@ -58,9 +57,6 @@ config.module
     .use('style-loader')
       .loader('style-loader')
       .end()
-    // .use('MiniCssExtractPlugin.loader')
-    //   .loader(MiniCssExtractPlugin.loader)
-    //   .end()
     .use('css-loader')
       .loader('css-loader')
       .options({
@@ -135,8 +131,5 @@ config.resolve
   .extensions.merge([ '.tsx', '.ts', '.js' ])
   .end()
   .modules.add(path.join(__dirname, 'node_modules'));
-
-// config.plugin('MiniCssExtractPlugin')
-//   .use(MiniCssExtractPlugin)
 
 module.exports = config;
