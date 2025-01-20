@@ -77,8 +77,7 @@ config.module
     .use('less-loader')
       .loader('less-loader')
       .options({
-        sourceMap: false,
-        javascriptEnabled: true,
+        sourceMap: false
       });
 
 config.module
