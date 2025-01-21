@@ -134,7 +134,7 @@ class App extends React.Component<any, Partial<State>> {
   }
 
   render() {
-    let images = [{
+    let files = [{
       src: img,
       alt: 'lake',
       downloadUrl: '',
@@ -242,7 +242,7 @@ class App extends React.Component<any, Partial<State>> {
             </div>
             <div className="img-list-wrap">
               <div className={imgListClass}>
-                {images.map((item, index) => {
+                {files.map((item, index) => {
                   return (
                     <div key={index.toString()} className="img-item">
                       <img src={item.src} onClick={() => {
@@ -263,7 +263,7 @@ class App extends React.Component<any, Partial<State>> {
           onClose={() => {
             this.setState({ visible: false });
           }}
-          images={images}
+          files={files}
           activeIndex={this.state.activeIndex}
           container={inline ? this.container : null}
           downloadable
@@ -271,8 +271,8 @@ class App extends React.Component<any, Partial<State>> {
             return toolbars.concat([{
               key: 'test',
               render: <div>C</div>,
-              onClick: (activeImage) => {
-                console.log(activeImage);
+              onClick: (activeFile) => {
+                console.log(activeFile);
               },
             }]);
           }}

@@ -1,21 +1,21 @@
 import * as React from 'react';
-import { ImageDecorator } from './ViewerProps';
+import { FileDecorator } from './ViewerProps';
 
 export interface ViewerNavProps {
   prefixCls: string;
-  images: ImageDecorator[];
+  files: FileDecorator[];
   activeIndex: number;
-  onChangeImg: (index: number) => void;
+  onChangeFile: (index: number) => void;
 }
 
 export default function ViewerNav(props: ViewerNavProps) {
   const { activeIndex = 0 } = props;
 
-  function handleChangeImg(newIndex) {
+  function handleChangeFile(newIndex) {
     if (activeIndex === newIndex) {
       return;
     }
-    props.onChangeImg(newIndex);
+    props.onChangeFile(newIndex);
   }
 
   let marginLeft = `calc(50% - ${activeIndex + 1} * 31px)`;
@@ -26,11 +26,11 @@ export default function ViewerNav(props: ViewerNavProps) {
   return (
     <div className={`${props.prefixCls}-navbar`}>
       <ul className={`${props.prefixCls}-list ${props.prefixCls}-list-transition`} style={listStyle}>
-        {props.images.map((item, index) =>
+        {props.files.map((item, index) =>
           <li
           key={index}
           className={index === activeIndex ? 'active' : ''}
-          onClick={() => { handleChangeImg(index); }}
+          onClick={() => { handleChangeFile(index); }}
           >
             <img src={item.src} alt={item.alt} />
           </li>,

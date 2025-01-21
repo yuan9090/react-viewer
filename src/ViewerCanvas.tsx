@@ -4,14 +4,14 @@ import classnames from 'classnames';
 
 export interface ViewerCanvasProps {
   prefixCls: string;
-  imgSrc: string;
+  fileSrc: string;
   visible: boolean;
   width: number;
   height: number;
   top: number;
   left: number;
   rotate: number;
-  onChangeImgState: (width: number, height: number, top: number, left: number) => void;
+  onChangeFileState: (width: number, height: number, top: number, left: number) => void;
   onResize: () => void;
   zIndex: number;
   scaleX: number;
@@ -73,7 +73,7 @@ export default function ViewerCanvas(props: ViewerCanvasProps) {
       x: position.x,
       y: position.y,
     };
-    props.onChangeImgState(props.width, props.height, props.top + diffY, props.left + diffX);
+    props.onChangeFileState(props.width, props.height, props.top + diffY, props.left + diffX);
   }, [position]);
 
   function handleResize(e) {
@@ -132,12 +132,12 @@ export default function ViewerCanvas(props: ViewerCanvasProps) {
     document[funcName]('mousemove', handleMouseMove, false);
   }
 
-  let imgStyle: React.CSSProperties = {
+  let fileStyle: React.CSSProperties = {
     width: `${props.width}px`,
     height: `${props.height}px`,
     transform: `
-translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${props.top}px)
-    rotate(${props.rotate}deg) scaleX(${props.scaleX}) scaleY(${props.scaleY})`,
+      translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${props.top}px)
+      rotate(${props.rotate}deg) scaleX(${props.scaleX}) scaleY(${props.scaleY})`,
   };
 
   const imgClass = classnames(`${props.prefixCls}-image`, {
@@ -149,17 +149,17 @@ translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${pro
     zIndex: props.zIndex,
   };
 
-  let imgNode = null;
-  if (props.imgSrc !== '') {
-    imgNode = <img
+  let node = null;
+  if (props.fileSrc !== '') {
+    node = <img
     className={imgClass}
-    src={props.imgSrc}
-    style={imgStyle}
+    src={props.fileSrc}
+    style={fileStyle}
     onMouseDown={handleMouseDown}
     />;
   }
   if (props.loading) {
-    imgNode = (
+    node = (
       <div
         style={{
           display: 'flex',
@@ -179,7 +179,7 @@ translateX(${props.left !== null ? props.left + 'px' : 'aoto'}) translateY(${pro
     onMouseDown={handleCanvasMouseDown}
     style={style}
     >
-      {imgNode}
+      {node}
     </div>
   );
 }
