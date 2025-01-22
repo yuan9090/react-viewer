@@ -105,6 +105,10 @@ class MockImage {
     this.ee.defineEvents(['load', 'error']);
   }
 
+  get src() {
+    return this.source;
+  }
+
   set src(value: string) {
     this.source = value;
     this.width = this.height = getImageSize();
@@ -125,10 +129,6 @@ class MockImage {
 
   addEventListener(event, callback) {
     this.ee.addListener(event, callback);
-  }
-
-  get src() {
-    return this.source;
   }
 }
 
