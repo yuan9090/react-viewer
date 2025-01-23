@@ -53,7 +53,7 @@ config.module
 
 config.module
   .rule('less')
-    .test(/\.less/)
+    .test(/\.(less|css)/)
     .use('style-loader')
       .loader('style-loader')
       .end()
@@ -126,9 +126,17 @@ config.module
     .use('file-loader')
       .loader('file-loader');
 
+config.module
+  .rule('pdf')
+    .test(/\.(pdf)$/)
+    .use('file-loader')
+      .loader('file-loader');
+
 config.resolve
   .extensions.merge([ '.tsx', '.ts', '.js' ])
   .end()
   .modules.add(path.join(__dirname, 'node_modules'));
+
+config.resolve.alias.set('react/jsx-runtime', 'react/jsx-runtime.js')
 
 module.exports = config;

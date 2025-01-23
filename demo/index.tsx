@@ -5,9 +5,17 @@ const img2 = require('./images/landscape2.jpg').default;
 const img = require('./images/landscape.jpg').default;
 const img3 = require('./images/tibet-6.jpg').default;
 const img4 = require('./images/image4.jpg').default;
+const pdf = require('./pdf/sample-local-pdf.pdf').default;
 import './index.less';
 import classNames from 'classnames';
 import { Button, List, Checkbox } from 'antd';
+
+import { pdfjs, Document, Page } from 'react-pdf';
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.mjs',
+  import.meta.url,
+).toString();
+
 const ButtonGroup = Button.Group;
 
 interface State {
@@ -150,6 +158,9 @@ class App extends React.Component<any, Partial<State>> {
       src: img4,
       alt: '',
       downloadUrl: '',
+    }, {
+      src: pdf,
+      alt: 'Sample pdf'
     }];
 
     let inline = this.state.mode === 'inline';
@@ -244,13 +255,25 @@ class App extends React.Component<any, Partial<State>> {
               <div className={imgListClass}>
                 {files.map((item, index) => {
                   return (
-                    <div key={index.toString()} className="img-item">
-                      <img src={item.src} onClick={() => {
+                    <div 
+                      key={index.toString()} 
+                      className="img-item"
+                      onClick={() => {
                         this.setState({
                           visible: true,
                           activeIndex: index,
                         });
-                      }}/>
+                      }}
+                    >
+                      {
+                        item.src.includes('.pdf')
+                        ? <div style={{ display: 'flex', justifyContent: 'center' }}>
+                          <Document file={item.src}>
+                            <Page pageNumber={1} width={150} scale={0.75} renderTextLayer={false} />
+                          </Document>
+                          </div>
+                        : <img src={item.src} />
+                      }
                     </div>
                   );
                 })}

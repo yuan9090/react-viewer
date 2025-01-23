@@ -31,6 +31,7 @@ export interface ViewerCoreState {
   visibleStart?: boolean;
   transitionEnd?: boolean;
   activeIndex?: number;
+  isPdf?: boolean;
   width?: number;
   height?: number;
   top?: number;
@@ -207,15 +208,38 @@ export default (props: ViewerProps) => {
     }
   }, [activeIndex, visible, files]);
 
-  function loadImg(currentActiveIndex, isReset = false) {
+  React.useEffect(() => {
+    if (state.startLoading) {
+      currentLoadIndex.current = state.activeIndex;
+      loadFile(state.activeIndex);
+    }
+  }, [state.startLoading, state.activeIndex]);
+
+  function loadFile(currentActiveIndex, isReset = false) {
+    let activeFile2: FileDecorator = null;
+    if (files.length > 0) {
+      activeFile2 = files[currentActiveIndex];
+      if (activeFile2.src.includes('.pdf')) {
+        dispatch(createAction(ACTION_TYPES.update, {
+          isPdf: true,
+          scaleX: isReset ? 1 : state.scaleX,
+          scaleY: isReset ? 1 : state.scaleY,
+          rotate: 0,
+          loading: false,
+          startLoading: false,
+        }));
+      } else {
+        loadImg(currentActiveIndex, activeFile2, isReset);
+      }
+    }
+  }
+
+  function loadImg(currentActiveIndex, activeImage, isReset = false) {
     dispatch(createAction(ACTION_TYPES.update, {
       loading: true,
       loadFailed: false,
     }));
-    let activeImage: FileDecorator = null;
-    if (files.length > 0) {
-      activeImage = files[currentActiveIndex];
-    }
+
     let loadComplete = false;
     let img = new Image();
     img.onload = () => {
@@ -276,6 +300,7 @@ export default (props: ViewerProps) => {
         scaleY = state.scaleY;
       }
       dispatch(createAction(ACTION_TYPES.update, {
+        isPdf: false,
         width: width,
         height: height,
         left: left,
@@ -291,13 +316,6 @@ export default (props: ViewerProps) => {
       }));
     }
   }
-
-  React.useEffect(() => {
-    if (state.startLoading) {
-      currentLoadIndex.current = state.activeIndex;
-      loadImg(state.activeIndex);
-    }
-  }, [state.startLoading, state.activeIndex]);
 
   function getImgWidthHeight(imgWidth, imgHeight) {
     let width = 0;
@@ -410,7 +428,7 @@ export default (props: ViewerProps) => {
         handleRotate(true);
         break;
       case ActionType.reset:
-        loadImg(state.activeIndex, true);
+        loadFile(state.activeIndex, true);
         break;
       case ActionType.scaleX:
         handleScaleX(-1);
@@ -516,7 +534,7 @@ export default (props: ViewerProps) => {
       // key: Ctrl + 1
       case 49:
         if (e.ctrlKey) {
-          loadImg(state.activeIndex);
+          loadFile(state.activeIndex);
           isFeatrue = true;
         }
         break;
@@ -534,6 +552,9 @@ export default (props: ViewerProps) => {
       return;
     }
     if (state.loading) {
+      return;
+    }
+    if (state.isPdf && !e.ctrlKey) {
       return;
     }
     e.preventDefault();
@@ -573,7 +594,7 @@ export default (props: ViewerProps) => {
     let height = 0;
     let scaleX = 0;
     let scaleY = 0;
-    if (state.width === 0) {
+    if (state.width === 0 && !state.isPdf) {
       const [imgWidth, imgHeight] = getImgWidthHeight(
         state.imageWidth,
         state.imageHeight,
@@ -666,6 +687,7 @@ export default (props: ViewerProps) => {
       )}
       <ViewerCanvas
         prefixCls={prefixCls}
+        isPdf={state.isPdf}
         fileSrc={state.loadFailed ? (props.defaultImg.src || activeFile.src) : activeFile.src}
         visible={visible}
         width={state.width}
@@ -690,6 +712,7 @@ export default (props: ViewerProps) => {
               prefixCls={prefixCls}
               onAction={handleAction}
               alt={activeFile.alt}
+              isPdf={state.isPdf}
               width={state.imageWidth}
               height={state.imageHeight}
               attribute={attribute}
