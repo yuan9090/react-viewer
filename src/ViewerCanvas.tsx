@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import { pdfjs, Document, Page } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
+import useClickOutside from './useClickOutside';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -38,6 +39,7 @@ export interface ViewerCanvasState {
 }
 
 export default function ViewerCanvas(props: ViewerCanvasProps) {
+  const pdfRef = React.useRef();
   const isMouseDown = React.useRef(false);
   const prePosition = React.useRef({
     x: 0,
@@ -173,7 +175,11 @@ export default function ViewerCanvas(props: ViewerCanvasProps) {
               : undefined,
         }}
       >
-        <Document file={props.fileSrc} onLoadSuccess={(info: { numPages: number }) => setNumPages(info.numPages)}>
+        <Document
+          inputRef={pdfRef}
+          file={props.fileSrc}
+          onLoadSuccess={(info: { numPages: number }) => setNumPages(info.numPages)}
+        >
           <div style={{ maxHeight: '100%', overflowY: 'auto' }}>
           {
             [...new Array(numPages)].map((_, index) => {
@@ -211,10 +217,12 @@ export default function ViewerCanvas(props: ViewerCanvasProps) {
     );
   }
 
+  useClickOutside(pdfRef, handleCanvasMouseDown);
+
   return (
     <div
     className={`${props.prefixCls}-canvas`}
-    onMouseDown={handleCanvasMouseDown}
+    onMouseDown={props.isPdf ? () => {} : handleCanvasMouseDown}
     style={style}
     >
       {node}
