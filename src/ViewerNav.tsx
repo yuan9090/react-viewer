@@ -1,5 +1,11 @@
 import * as React from 'react';
+import { pdfjs, Document, Page } from 'react-pdf';
 import { FileDecorator } from './ViewerProps';
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.mjs',
+  import.meta.url,
+).toString();
 
 export interface ViewerNavProps {
   prefixCls: string;
@@ -32,7 +38,15 @@ export default function ViewerNav(props: ViewerNavProps) {
           className={index === activeIndex ? 'active' : ''}
           onClick={() => { handleChangeFile(index); }}
           >
-            <img src={item.src} alt={item.alt} />
+            {
+              item.src.includes('.pdf')
+              ? <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <Document file={item.src}>
+              <Page pageNumber={1} width={150} scale={0.75} renderTextLayer={false} />
+            </Document>
+            </div>
+              : <img src={item.src} alt={item.alt} />
+            }
           </li>,
           )
         }
