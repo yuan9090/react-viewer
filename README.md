@@ -1,7 +1,11 @@
-# react-viewer
+# @iftek/react-viewer
 
-[![NPM version][npm-image]][npm-url] [![](https://travis-ci.org/infeng/react-viewer.svg?branch=master)](https://travis-ci.org/infeng/react-viewer) [![codecov](https://codecov.io/gh/infeng/react-viewer/branch/master/graph/badge.svg)](https://codecov.io/gh/infeng/react-viewer)
-> react image viewer.
+[![version](https://badge.fury.io/js/%40iftek%2Freact-viewer.svg)](https://www.npmjs.com/package/@iftek/react-viewer)
+[![downloads](https://img.shields.io/npm/dt/@iftek/react-viewer.svg?style=flat-square)](https://npm-stat.com/charts.html?package=@iftek/react-viewer&from=2025-01-20)
+
+- react image/pdf viewer.
+- Fork from [react-viewer](https://github.com/infeng/react-viewer)
+- Breaking change 3.x to 4.x : props `images` to `files`.
 
 ## Introduction
 
@@ -12,14 +16,14 @@ Because I can`t be comfortable using [viewerjs](https://github.com/fengyuanchen/
 > react >= 16.8.0 | react-dom >= 16.8.0
 
 ```bash
-npm install react-viewer --save
+npm install @iftek/react-viewer --save
 ```
 
 ## Usage
 
 ```javascript
 import * as React from 'react';
-import Viewer from 'react-viewer';
+import Viewer from '@iftek/react-viewer';
 
 function App() {
   const [ visible, setVisible ] = React.useState(false);
@@ -30,7 +34,7 @@ function App() {
       <Viewer
       visible={visible}
       onClose={() => { setVisible(false); } }
-      images={[{src: '', alt: ''}]}
+      files={[{src: '', alt: ''}]}
       />
     </div>
   );
@@ -53,7 +57,7 @@ export const Viewer: FC = () => {
     <ReactViewer
       visible={true}
       onClose={() => {}}
-      images={[{src: ''}]}
+      files={[{src: ''}]}
     />
   )
 }
@@ -62,7 +66,7 @@ export default Viewer
 ```
 
 ## Server Side rest..
-I'm sorry, ssr is not currently supported in `3.x`, it will be fixed in `4.0`.
+I'm sorry, ssr is not currently supported in `4.x`, it will be fixed in `5.0`.
 
 ## Props
 

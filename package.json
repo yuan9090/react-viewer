@@ -1,7 +1,7 @@
 {
-  "name": "react-viewer",
-  "version": "3.2.2",
-  "description": "react image viewer",
+  "name": "@iftek/react-viewer",
+  "version": "4.1.0",
+  "description": "react image/pdf viewer",
   "main": "dist/index",
   "scripts": {
     "test": "jest",
@@ -10,31 +10,32 @@
     "build": "webpack --config webpack.config.prop.js && gulp",
     "build:analyze": "ANALYZE=true webpack --config webpack.config.prop.js",
     "doc": "webpack --config webpack.config.doc.js",
-    "pub": "npm run build && npm publish",
+    "pub": "npm run build && npm publish --access=public",
     "prepublish": "npm run build",
     "predeploy": "npm run doc",
     "deploy": "gh-pages -d pages-build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/infeng/react-viewer.git"
+    "url": "git+https://github.com/yuan9090/react-viewer.git"
   },
   "keywords": [
     "react",
     "image",
+    "pdf",
     "viewer"
   ],
-  "author": "infeng",
+  "author": "yuan9090",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/infeng/react-viewer/issues"
+    "url": "https://github.com/yuan9090/react-viewer/issues"
   },
   "files": [
     "dist",
     "lib"
   ],
   "typings": "lib/index.d.ts",
-  "homepage": "https://github.com/infeng/react-viewer#readme",
+  "homepage": "https://github.com/yuan9090/react-viewer#readme",
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
@@ -92,6 +93,12 @@
   },
   "optionalDependencies": {
     "fsevents": "2.3.3"
+  },
+  "browser": {
+    "fs": false,
+    "http": false,
+    "https": false,
+    "url": false
   },
   "pre-commit": [
     "lint"
