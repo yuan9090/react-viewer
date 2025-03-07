@@ -217,7 +217,12 @@ export default function ViewerCanvas(props: ViewerCanvasProps) {
     );
   }
 
-  useClickOutside(pdfRef, handleCanvasMouseDown);
+  useClickOutside(pdfRef, event => {
+    const element = event.target as HTMLElement;
+    if (element.tagName === 'DIV') {
+      handleCanvasMouseDown(event);
+    }
+  });
 
   return (
     <div
