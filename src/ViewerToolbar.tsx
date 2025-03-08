@@ -104,9 +104,6 @@ export default function ViewerToolbar(props: ViewerToolbarProps) {
       {props.noImgDetails || <span className={`${props.prefixCls}-img-details`}>
       {!props.isPdf && `(${props.width} x ${props.height})`}
       </span>}
-      {props.showTotal
-        && <span className={`${props.prefixCls}-showTotal`}>
-          {`${props.activeIndex + 1} ${props.totalName} ${props.count}`}</span>}
     </p>
   ) : null;
   let toolbars = props.toolbars;
@@ -125,6 +122,11 @@ export default function ViewerToolbar(props: ViewerToolbarProps) {
   if (!props.downloadable) {
     toolbars = deleteToolbarFromKey(toolbars, ['download']);
   }
+  let totalNode = props.showTotal ? (
+    <span className={`${props.prefixCls}-showTotal`}>
+      {`${props.activeIndex + 1} ${props.totalName} ${props.count}`}
+    </span>
+  ) : null;
   return (
     <div>
       {attributeNode}
@@ -133,6 +135,7 @@ export default function ViewerToolbar(props: ViewerToolbarProps) {
           return renderAction(item);
         })}
       </ul>
+      {totalNode}
     </div>
   );
 }
