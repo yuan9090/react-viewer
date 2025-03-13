@@ -39,7 +39,7 @@ export default function ViewerNav(props: ViewerNavProps) {
           onClick={() => { handleChangeFile(index); }}
           >
             {
-              item.src.includes('.pdf')
+              item.src?.includes('.pdf')
               ? <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Document file={item.src}>
               <Page pageNumber={1} width={150} scale={0.75} renderTextLayer={false} />
