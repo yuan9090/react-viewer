@@ -1,6 +1,6 @@
 {
   "name": "@iftek/react-viewer",
-  "version": "4.1.2",
+  "version": "4.1.3",
   "description": "react image/pdf viewer",
   "main": "dist/index",
   "scripts": {
