@@ -219,7 +219,7 @@ export default (props: ViewerProps) => {
     let activeFile2: FileDecorator = null;
     if (files.length > 0) {
       activeFile2 = files[currentActiveIndex];
-      if (activeFile2.src?.includes('.pdf')) {
+      if (activeFile2?.src?.includes('.pdf')) {
         dispatch(createAction(ACTION_TYPES.update, {
           isPdf: true,
           scaleX: isReset ? 1 : state.scaleX,
