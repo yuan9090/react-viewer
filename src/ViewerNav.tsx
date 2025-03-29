@@ -32,7 +32,7 @@ export default function ViewerNav(props: ViewerNavProps) {
   return (
     <div className={`${props.prefixCls}-navbar`}>
       <ul className={`${props.prefixCls}-list ${props.prefixCls}-list-transition`} style={listStyle}>
-        {props.files.map((item, index) =>
+        {props.files.map((item = {}, index) =>
           <li
           key={index}
           className={index === activeIndex ? 'active' : ''}

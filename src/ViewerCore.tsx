@@ -228,7 +228,7 @@ export default (props: ViewerProps) => {
           loading: false,
           startLoading: false,
         }));
-      } else {
+      } else if (activeFile2) {
         loadImg(currentActiveIndex, activeFile2, isReset);
       }
     }
