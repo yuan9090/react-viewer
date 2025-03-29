@@ -102,7 +102,7 @@ export default function ViewerToolbar(props: ViewerToolbarProps) {
     <p className={`${props.prefixCls}-attribute`}>
       {props.alt && `${props.alt}`}
       {props.noImgDetails || <span className={`${props.prefixCls}-img-details`}>
-      {!props.isPdf && `(${props.width} x ${props.height})`}
+      {!props.isPdf && props.width && props.height && `(${props.width} x ${props.height})`}
       </span>}
     </p>
   ) : null;
